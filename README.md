@@ -68,12 +68,30 @@ ERROR 以上のログ（POS 登録の失敗、想定外の例外）を LINE WORK
 docker-compose -f docker-compose.prod.yml run --rm --no-deps app php artisan key:generate --show
 ```
 
-`.env` を変更したら `up -d --force-recreate` でコンテナを作り直し、下の `*:cache` を実行し直す。
+### ソースの反映
+
+master を GitHub に push したあと、EC2 のリポジトリで実行する。origin/master の最新を取得してビルドし、コンテナを入れ替えてキャッシュを作り直す。ビルド中は旧コンテナが動き続け、止まるのは入れ替えの数秒のみ。セッションは `storage/framework/sessions`（ホスト側）にあるため入れ替え後も維持される。
+
+```bash
+./deploy.sh
+```
+
+起動を確認できなかった場合や、反映後に問題があった場合は、表示されたコミットを指定して切り戻す。
+
+```bash
+./deploy.sh <コミット>
+```
+
+`deploy.sh` はサーバー上で変更されたファイルがあると中断する（本番のソースはサーバーで直接編集しない）。
+
+### `.env` の変更
+
+`.env` を変更したら `up -d --force-recreate` でコンテナを作り直し、下の `*:cache` を実行し直す（ビルドは不要）。
 
 `artisan` は `-u www-data` を付けて実行する（root で実行すると root 所有のログファイルができ、サイトがログを書けなくなる）。
 
 ```bash
-docker-compose -f docker-compose.prod.yml up -d --build
+docker-compose -f docker-compose.prod.yml up -d --force-recreate
 docker-compose -f docker-compose.prod.yml exec -u www-data app php artisan config:cache
 docker-compose -f docker-compose.prod.yml exec -u www-data app php artisan route:cache
 docker-compose -f docker-compose.prod.yml exec -u www-data app php artisan view:cache

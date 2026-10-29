@@ -54,8 +54,8 @@ class ReservationFlowTest extends TestCase
             ->assertSee('まだご予約は完了していません。')
             ->assertSeeInOrder(['シャンティ・ショコラ・フレーズ', '¥4,900', '2台', '¥9,800'])
             ->assertSeeInOrder(['titaのオードブル', '¥3,620', '1セット', '¥3,620'])
-            ->assertSeeInOrder(['フライドチキン（４個）', '¥540', '3セット', '¥1,620'])
-            ->assertSee('¥15,040')
+            ->assertSeeInOrder(['フライドチキン（４個）', '¥650', '3セット', '¥1,950'])
+            ->assertSee('¥15,370')
             ->assertSee('フラットリア チタ')
             ->assertSee('12月24日（木）')
             ->assertSee('17:00〜18:00')
@@ -75,17 +75,17 @@ class ReservationFlowTest extends TestCase
             ->assertOk()
             ->assertSee('ご予約を承りました')
             ->assertSee('261224121000')
-            ->assertSee('¥15,040')
+            ->assertSee('¥15,370')
             ->assertDontSee('090-1234-5678');
 
         $slip = $this->posTable('P_SLIP_TRN')->sole();
         $this->assertSame('261224121000', $slip->SLIP_NO);
         $this->assertSame(12, $slip->BRAND_ID);
-        $this->assertSame(15040, $slip->TOTAL_PRICE);
+        $this->assertSame(15370, $slip->TOTAL_PRICE);
 
         // 店舗 12 では店舗別の商品IDに変換して登録する（7274 → 7298）
         $this->assertSame(
-            [7298 => [2, 4900], 8866 => [1, 3620], 3833 => [3, 540]],
+            [7298 => [2, 4900], 8866 => [1, 3620], 3833 => [3, 650]],
             $this->posTable('P_ORDER_DETAIL_TRN')->orderBy('ORDER_DETAIL_ID')->get()
                 ->mapWithKeys(fn ($row) => [$row->PRODUCT_ID => [$row->AMOUNT, $row->PRICE]])->all(),
         );
