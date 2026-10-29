@@ -1,5 +1,6 @@
 <?php
 
+use App\Logging\CreateLineWorksLogger;
 use Monolog\Handler\NullHandler;
 use Monolog\Handler\StreamHandler;
 use Monolog\Handler\SyslogUdpHandler;
@@ -71,6 +72,14 @@ return [
             'level' => env('LOG_LEVEL', 'debug'),
             'max_files' => env('LOG_DAILY_DAYS', 14),
             'replace_placeholders' => true,
+        ],
+
+        'lineworks' => [
+            'driver' => 'custom',
+            'via' => CreateLineWorksLogger::class,
+            'level' => 'error',
+            'channel' => env('LINEWORKS_ERROR_CHANNEL_ID'),
+            'throttle' => env('LINEWORKS_ERROR_THROTTLE_SECONDS', 300),
         ],
 
         'monthly' => [

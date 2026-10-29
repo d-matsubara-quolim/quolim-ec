@@ -40,6 +40,14 @@ docker compose exec app php artisan test
 
 テストは `mysql-test` コンテナの `pos_test` に POS テーブルの DDL（`tests/Fixtures/pos_schema.sql`）を毎回流し込んで実行する。`dev_erp` には接続しない。
 
+## エラー通知（LINE WORKS）
+
+ERROR 以上のログ（POS 登録の失敗、想定外の例外）を LINE WORKS のチャネルに通知する。同じエラーは 5 分に 1 回まで。お客様の個人情報や SQL は送らない。
+
+- `.env` の `LOG_STACK` に `lineworks` を含め、`LINEWORKS_*` に erp-quolim と同じ Bot の認証情報を設定する
+- 通知先は `LINEWORKS_ERROR_CHANNEL_ID`（Bot がそのチャネルに参加している必要がある）
+- 設定の確認：`php artisan lineworks:test-notification`
+
 ## キャンペーンの追加・変更
 
 キャンペーンは `config/seasonal/{slug}.php` を 1 ファイル追加すると `/seasonal/{slug}` で公開される。期間が重なるキャンペーンも同時に公開できる。
@@ -68,6 +76,7 @@ docker compose -f docker-compose.prod.yml exec app php artisan view:cache
   - `TRUSTED_PROXIES=*`（ALB で HTTPS を終端するため。EC2 には ALB からしか到達できないこと）
   - `SESSION_SECURE_COOKIE=true`
   - `LOG_LEVEL=info`
+  - `LOG_STACK=daily,lineworks` と `LINEWORKS_*`（`php artisan lineworks:test-notification` で届くことを確認）
 - [ ] HTTPS で配信されている（ALB のヘルスチェックは `/up`）
 - [ ] 受付期間（`opens_at` / `closes_at`）が正しい
 - [ ] 各店舗で 1 件テスト予約し、POS の予約台帳に表示されることを確認した（確認後に削除）

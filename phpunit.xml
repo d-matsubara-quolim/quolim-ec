@@ -26,7 +26,8 @@
         <env name="MAIL_MAILER" value="array"/>
         <env name="QUEUE_CONNECTION" value="sync"/>
         <env name="SESSION_DRIVER" value="array"/>
-        <env name="LOG_STACK" value="single"/>
+        <env name="LOG_STACK" value="single" force="true"/>
+        <env name="LINEWORKS_ERROR_CHANNEL_ID" value="" force="true"/>
         <!-- POS はテスト専用コンテナ（docker-compose の mysql-test）に接続する。dev_erp には接続しない -->
         <env name="DB_CONNECTION" value="pos" force="true"/>
         <env name="POS_DB_HOST" value="mysql-test" force="true"/>
