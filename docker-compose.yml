@@ -1,0 +1,60 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: docker/local/Dockerfile
+      args:
+        UID: ${UID:-1000}
+        GID: ${GID:-1000}
+    container_name: quolim-ec-app
+    restart: unless-stopped
+    working_dir: /var/www/html
+    volumes:
+      - .:/var/www/html
+    extra_hosts:
+      # 開発時の POS DB は、ホスト側の SSH トンネル（localhost:3307 → RDS）経由で接続する
+      - "host.docker.internal:host-gateway"
+    networks:
+      - quolim-ec
+    depends_on:
+      mysql-test:
+        condition: service_healthy
+
+  nginx:
+    image: nginx:1.27-alpine
+    container_name: quolim-ec-nginx
+    restart: unless-stopped
+    ports:
+      - "${APP_PORT:-8090}:80"
+    volumes:
+      - .:/var/www/html
+      - ./docker/local/nginx.conf:/etc/nginx/conf.d/default.conf
+    networks:
+      - quolim-ec
+    depends_on:
+      - app
+
+  # 自動テスト専用。POS テーブルを tests/Fixtures/pos_schema.sql で毎回作り直す
+  mysql-test:
+    image: mysql:8.4
+    container_name: quolim-ec-mysql-test
+    restart: unless-stopped
+    command: ["--sql-mode=NO_ENGINE_SUBSTITUTION", "--transaction-isolation=REPEATABLE-READ"]
+    environment:
+      MYSQL_DATABASE: pos_test
+      MYSQL_USER: test
+      MYSQL_PASSWORD: test
+      MYSQL_ROOT_PASSWORD: root
+    tmpfs:
+      - /var/lib/mysql
+    networks:
+      - quolim-ec
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-proot"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+
+networks:
+  quolim-ec:
+    driver: bridge

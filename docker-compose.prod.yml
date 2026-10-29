@@ -1,0 +1,16 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: docker/production/Dockerfile
+    container_name: quolim-ec
+    restart: unless-stopped
+    env_file:
+      - .env
+    ports:
+      - "${APP_PORT:-8080}:80"
+    volumes:
+      # ログ・セッション・キャッシュはコンテナを作り直しても残す
+      - ./storage/logs:/var/www/html/storage/logs
+      - ./storage/framework/sessions:/var/www/html/storage/framework/sessions
+      - ./storage/framework/cache:/var/www/html/storage/framework/cache
