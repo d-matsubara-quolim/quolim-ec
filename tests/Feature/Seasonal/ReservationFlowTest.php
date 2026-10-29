@@ -231,7 +231,10 @@ class ReservationFlowTest extends TestCase
 
         $this->get('/seasonal/xmas-2026')
             ->assertSee('value="笹 泉子"', false)
-            ->assertSee('<option value="2" selected', false);
+            ->assertSee('id="quantity-7274" value="2"', false)
+            ->assertSee('name="store" value="12" checked', false)
+            ->assertSee('name="date" value="2026-12-24" checked', false)
+            ->assertSee('name="time_slot" value="17:00-18:00" checked', false);
     }
 
     public function test_complete_page_without_reservation_redirects_to_form(): void

@@ -1,6 +1,6 @@
 <footer class="site-footer">
-    <div class="container">
-        <p><a href="{{ config('app.privacy_policy_url') }}" target="_blank" rel="noopener">プライバシーポリシー</a></p>
-        <p>Copyright &copy; QUOLIM Co. Ltd. All rights reserved.</p>
+    <div class="container site-footer__inner">
+        <a href="{{ config('app.privacy_policy_url') }}" target="_blank" rel="noopener">プライバシーポリシー</a>
+        <p>&copy; QUOLIM Co. Ltd.</p>
     </div>
 </footer>

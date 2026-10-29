@@ -2,13 +2,18 @@
 
 @section('title', 'ご予約内容の確認')
 
-@use('App\Seasonal\PickupStore')
-
 @php
     $store = $campaign->store($reservation->storeCode);
 @endphp
 
 @section('content')
+<div class="narrow">
+    <ol class="progress" aria-label="ご予約の手順">
+        <li class="progress__item is-done">入力</li>
+        <li class="progress__item is-current" aria-current="step">確認</li>
+        <li class="progress__item">完了</li>
+    </ol>
+
     <h1 class="page-title">ご予約内容の確認</h1>
 
     <p class="notice notice--warning">
@@ -29,8 +34,8 @@
         'timeSlot' => $reservation->timeSlot,
     ])
 
-    <section class="step">
-        <h2 class="step__title">連絡先</h2>
+    <section class="panel">
+        <h2 class="panel__title">お客様情報</h2>
         <dl class="summary-list">
             <dt>お名前</dt><dd>{{ $reservation->name }}</dd>
             <dt>ふりがな</dt><dd>{{ $reservation->kana }}</dd>
@@ -42,17 +47,18 @@
     <p class="notice">お支払いは、お受け取りの際に店舗でお願いいたします。</p>
 
     <div class="actions">
-        <form method="post" action="{{ route('seasonal.reservations.edit', $campaign->slug) }}">
-            @csrf
-            <input type="hidden" name="token" value="{{ $token }}">
-            <button type="submit" class="button">修正する</button>
-        </form>
         <form method="post" action="{{ route('seasonal.reservations.store', $campaign->slug) }}" data-submit-once>
             @csrf
             <input type="hidden" name="token" value="{{ $token }}">
             <button type="submit" class="button button--primary">予約する</button>
         </form>
+        <form method="post" action="{{ route('seasonal.reservations.edit', $campaign->slug) }}">
+            @csrf
+            <input type="hidden" name="token" value="{{ $token }}">
+            <button type="submit" class="button">修正する</button>
+        </form>
     </div>
+</div>
 @endsection
 
 @push('scripts')

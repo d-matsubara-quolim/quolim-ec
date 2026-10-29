@@ -43,8 +43,7 @@ class ProductPagesTest extends TestCase
         ] as [$id, $name, $price, $note]) {
             $response->assertSee($name)->assertSee("商品ID：{$id}")->assertSee($price)
                 ->assertSee("name=\"quantities[{$id}]\"", false)
-                ->assertSee('<option value="10"', false)
-                ->assertDontSee('<option value="11"', false);
+                ->assertSee('min="0" max="10"', false);
             if ($note !== null) {
                 $response->assertSee($note);
             }
@@ -61,10 +60,11 @@ class ProductPagesTest extends TestCase
         $this->get('/seasonal/xmas-2026/products/8866')
             ->assertOk()
             ->assertSee('titaのオードブル')
-            ->assertSee('商品ID：8866')
+            ->assertSeeInOrder(['商品ID', '8866'])
             ->assertSee('¥3,620')
             ->assertSee('https://cdn.quolim.co.jp/img/tita/menu/set_004.png')
-            ->assertSee('受取店舗：フラットリア チタ')
+            ->assertSeeInOrder(['受取店舗', 'フラットリア チタ'])
+            ->assertDontSee('サイエンス パティスリー ササ')
             ->assertDontSee('product-detail__description', false);
     }
 

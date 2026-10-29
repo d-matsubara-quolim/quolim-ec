@@ -39,6 +39,17 @@ final readonly class PickupStore
         return in_array($timeSlot, $this->timeSlots, true);
     }
 
+    /**
+     * 最初の枠の開始から最後の枠の終了まで（例：12:00〜19:00）。
+     */
+    public function pickupHours(): string
+    {
+        $first = explode('-', $this->timeSlots[0]);
+        $last = explode('-', $this->timeSlots[array_key_last($this->timeSlots)]);
+
+        return self::formatTimeSlot($first[0].'-'.$last[1]);
+    }
+
     public static function formatDate(string $date): string
     {
         $day = CarbonImmutable::parse($date);

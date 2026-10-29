@@ -1,5 +1,5 @@
 /*
- * 季節商品予約フォームの表示補助（合計金額、受取店舗に応じた選択肢の絞り込み）。
+ * 季節商品予約フォームの表示補助（個数の増減、合計金額、受取店舗に応じた選択肢の絞り込み）。
  * 金額・選択肢の正しさはサーバー側で検証するため、ここでの計算は表示専用。
  */
 (function () {
@@ -12,59 +12,84 @@
     }
 
     var data = JSON.parse(dataElement.textContent);
-    var storeSelect = document.getElementById('store');
-    var dateSelect = document.getElementById('date');
-    var timeSlotSelect = document.getElementById('time_slot');
     var totalElement = document.getElementById('total');
+    var countElement = document.getElementById('item-count');
 
     function yen(amount) {
         return '¥' + amount.toLocaleString('ja-JP');
     }
 
-    function updateTotals() {
-        var total = 0;
-        form.querySelectorAll('[data-product]').forEach(function (card) {
-            var product = data.products[card.dataset.product];
-            var select = card.querySelector('.quantity-select');
-            var subtotal = select.disabled ? 0 : product.price * parseInt(select.value || '0', 10);
-            card.querySelector('[data-subtotal]').textContent = yen(subtotal);
-            total += subtotal;
-        });
-        totalElement.textContent = yen(total);
+    function quantityOf(input) {
+        var value = parseInt(input.value, 10);
+        if (isNaN(value) || value < 0) {
+            return 0;
+        }
+        return Math.min(value, parseInt(input.max, 10));
     }
 
-    function filterOptions(select, allowed) {
-        Array.prototype.forEach.call(select.options, function (option) {
-            if (option.value === '') {
-                return;
+    function updateTotals() {
+        var total = 0;
+        var count = 0;
+        form.querySelectorAll('[data-product]').forEach(function (card) {
+            var input = card.querySelector('.stepper__input');
+            var quantity = input.disabled ? 0 : quantityOf(input);
+            total += data.products[card.dataset.product].price * quantity;
+            count += quantity;
+            card.classList.toggle('is-selected', quantity > 0);
+            card.querySelector('[data-step="-1"]').disabled = input.disabled || quantity <= 0;
+            card.querySelector('[data-step="1"]').disabled = input.disabled || quantity >= parseInt(input.max, 10);
+        });
+        totalElement.textContent = yen(total);
+        countElement.textContent = count > 0 ? count + '点' : '';
+    }
+
+    function selectedStore() {
+        var checked = form.querySelector('input[name="store"]:checked');
+        return checked ? checked.value : null;
+    }
+
+    function filterChoices(name, allowed) {
+        form.querySelectorAll('input[name="' + name + '"]').forEach(function (input) {
+            var enabled = allowed === null || allowed.indexOf(input.value) !== -1;
+            input.disabled = !enabled;
+            if (!enabled) {
+                input.checked = false;
             }
-            var enabled = allowed === null || allowed.indexOf(option.value) !== -1;
-            option.disabled = !enabled;
-            option.hidden = !enabled;
-            if (!enabled && option.selected) {
-                select.value = '';
-            }
+            input.closest('.choice').hidden = !enabled;
         });
     }
 
     function updateStore() {
-        var store = data.stores[storeSelect.value] || null;
-        filterOptions(dateSelect, store ? store.dates : null);
-        filterOptions(timeSlotSelect, store ? store.timeSlots : null);
+        var code = selectedStore();
+        var store = code ? data.stores[code] : null;
+        filterChoices('date', store ? store.dates : null);
+        filterChoices('time_slot', store ? store.timeSlots : null);
 
         form.querySelectorAll('[data-product]').forEach(function (card) {
-            var product = data.products[card.dataset.product];
-            var available = !store || product.stores.indexOf(storeSelect.value) !== -1;
+            var available = !code || data.products[card.dataset.product].stores.indexOf(code) !== -1;
             card.classList.toggle('is-unavailable', !available);
-            card.querySelector('.quantity-select').disabled = !available;
+            card.querySelector('.stepper__input').disabled = !available;
         });
         updateTotals();
     }
 
-    form.querySelectorAll('.quantity-select').forEach(function (select) {
-        select.addEventListener('change', updateTotals);
+    form.querySelectorAll('[data-product]').forEach(function (card) {
+        var input = card.querySelector('.stepper__input');
+        card.querySelectorAll('[data-step]').forEach(function (button) {
+            button.addEventListener('click', function () {
+                input.value = String(Math.max(0, Math.min(quantityOf(input) + parseInt(button.dataset.step, 10), parseInt(input.max, 10))));
+                updateTotals();
+            });
+        });
+        input.addEventListener('input', updateTotals);
+        input.addEventListener('change', function () {
+            input.value = String(quantityOf(input));
+            updateTotals();
+        });
     });
-    storeSelect.addEventListener('change', updateStore);
+    form.querySelectorAll('input[name="store"]').forEach(function (input) {
+        input.addEventListener('change', updateStore);
+    });
 
     updateStore();
 })();
