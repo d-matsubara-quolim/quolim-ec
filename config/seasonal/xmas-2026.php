@@ -101,7 +101,7 @@ return [
             'id' => 3833,
             'name' => 'フライドチキン（４個）',
             'name_en' => 'Poulet Frit',
-            'price' => 540,
+            'price' => 650,
             'unit' => 'セット',
             'note' => '',
             'image' => 'https://cdn.quolim.co.jp/img/tita/menu/set_007.png',
