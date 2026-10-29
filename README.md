@@ -60,11 +60,23 @@ ERROR 以上のログ（POS 登録の失敗、想定外の例外）を LINE WORK
 
 ## 本番デプロイ
 
+本番（EC2）の Docker Compose は単体版のため、コマンドは `docker-compose`（ハイフンあり）を使う。v2 系であること（`docker-compose version` が `v2.x.x`）。
+
+本番イメージには `.env` を含めない（`env_file` でコンテナの環境変数として渡す）。そのため `php artisan key:generate` は使えない。APP_KEY は次で表示し、ホストの `.env` に貼る。
+
 ```bash
-docker compose -f docker-compose.prod.yml up -d --build
-docker compose -f docker-compose.prod.yml exec app php artisan config:cache
-docker compose -f docker-compose.prod.yml exec app php artisan route:cache
-docker compose -f docker-compose.prod.yml exec app php artisan view:cache
+docker-compose -f docker-compose.prod.yml run --rm --no-deps app php artisan key:generate --show
+```
+
+`.env` を変更したら `up -d --force-recreate` でコンテナを作り直し、下の `*:cache` を実行し直す。
+
+`artisan` は `-u www-data` を付けて実行する（root で実行すると root 所有のログファイルができ、サイトがログを書けなくなる）。
+
+```bash
+docker-compose -f docker-compose.prod.yml up -d --build
+docker-compose -f docker-compose.prod.yml exec -u www-data app php artisan config:cache
+docker-compose -f docker-compose.prod.yml exec -u www-data app php artisan route:cache
+docker-compose -f docker-compose.prod.yml exec -u www-data app php artisan view:cache
 ```
 
 ### チェックリスト
