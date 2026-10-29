@@ -37,6 +37,16 @@ html {
     scroll-padding-bottom: 100px;
 }
 
+/* スマホでボタンを連続タップしたときの拡大を防ぐ（ピンチでの拡大はできる） */
+a,
+button,
+input,
+label,
+select,
+textarea {
+    touch-action: manipulation;
+}
+
 body {
     margin: 0;
     color: var(--color-text);
@@ -622,6 +632,39 @@ textarea.field__input {
     flex: 1;
     color: var(--color-muted);
     font-size: 12px;
+}
+
+/* スマホは 1 列。画像を左、商品情報を右に並べる */
+@media (max-width: 639px) {
+    .product-grid {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 12px;
+    }
+
+    .product-card {
+        display: grid;
+        grid-template-columns: 112px minmax(0, 1fr);
+        grid-template-areas:
+            "media body"
+            "stepper stepper";
+    }
+
+    .product-card__media {
+        grid-area: media;
+        align-self: start;
+        overflow: hidden;
+        margin: 12px 0 0 12px;
+        border-radius: var(--radius-sm);
+    }
+
+    .product-card__body {
+        grid-area: body;
+        padding: 12px 12px 0 14px;
+    }
+
+    .stepper {
+        grid-area: stepper;
+    }
 }
 
 /* ---------- choices (store / date / time) ---------- */
