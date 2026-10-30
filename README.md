@@ -53,7 +53,7 @@ ERROR 以上のログ（POS 登録の失敗、想定外の例外）を LINE WORK
 キャンペーンは `config/seasonal/{slug}.php` を 1 ファイル追加すると `/seasonal/{slug}` で公開される。期間が重なるキャンペーンも同時に公開できる。
 
 - 商品・価格・受取店舗・日時枠・受付期間はこのファイルで管理する（登録される金額はここの価格）
-- キャンペーンの説明文は `resources/views/seasonal/campaigns/{slug}/description.blade.php`
+- キャンペーンの説明文（`description`）と注意書き（`notice`）もこのファイル。並び・装飾（HTML）を変えるときは `resources/views/seasonal/campaigns/{slug}/description.blade.php`
 - 店舗ごとの POS 側設定（部屋 ID・グループ商品）は `config/pos.php`
 
 本番で設定を変えたら `php artisan config:cache` を実行し直す。

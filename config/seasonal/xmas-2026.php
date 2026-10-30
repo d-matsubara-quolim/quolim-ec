@@ -6,7 +6,7 @@
 |--------------------------------------------------------------------------
 |
 | 価格・上限・受取可能店舗はサーバー側の検証と POS 登録にも使うため、ここが唯一の定義。
-| キャンペーン全体の説明文（HTML）は resources/views/seasonal/campaigns/xmas-2026/description.blade.php に置く。
+| 説明文の並び・装飾（HTML）は resources/views/seasonal/campaigns/xmas-2026/description.blade.php で変える。
 |
 | 受付期間を変更した場合は、反映のため `php artisan config:cache` を再実行すること。
 |
@@ -16,7 +16,11 @@ return [
 
     'title' => 'クリスマスケーキ・オードブル',
 
+    // 予約フォーム上部の説明文。検索結果に表示される説明（meta description）にも使う
     'description' => 'ささいずみのパティシエがお届けするクリスマスケーキと、フラットリア チタのオードブルのWeb予約です。',
+
+    // 説明文の下の注意書き（改行可・空なら非表示）
+    'notice' => 'titaのオードブル・フライドチキン・キッシュは「フラットリア チタ」でのお受け取りとなります。',
 
     'cover_image' => 'https://cdn.quolim.co.jp/img/sps/top/xmas-cake.png',
 

@@ -81,6 +81,21 @@ class ProductPagesTest extends TestCase
             ->assertDontSee('<b>人気No.1</b>', false);
     }
 
+    public function test_campaign_notice_is_shown_from_config(): void
+    {
+        $this->get('/seasonal/xmas-2026')
+            ->assertOk()
+            ->assertSee('「フラットリア チタ」でのお受け取りとなります。');
+
+        config(['seasonal.xmas-2026.notice' => "<b>注意</b>\n2行目"]);
+        $this->get('/seasonal/xmas-2026')
+            ->assertSee('&lt;b&gt;注意&lt;/b&gt;<br />'."\n".'2行目', false)
+            ->assertDontSee('<b>注意</b>', false);
+
+        config(['seasonal.xmas-2026.notice' => '']);
+        $this->get('/seasonal/xmas-2026')->assertDontSee('campaign-description__note', false);
+    }
+
     public function test_form_links_to_privacy_policy(): void
     {
         $this->get('/seasonal/xmas-2026')
