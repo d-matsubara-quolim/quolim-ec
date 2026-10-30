@@ -19,6 +19,8 @@
     --color-warning-border: #eadfc2;
     --color-highlight: #ff9900;
     --color-highlight-bg: #fff6e0;
+    --color-selected: var(--color-accent);
+    --color-selected-bg: var(--color-accent-soft);
     --radius-sm: 8px;
     --radius: 14px;
     --radius-lg: 20px;
@@ -509,8 +511,13 @@ textarea.field__input {
 }
 
 .product-card.is-selected {
-    border-color: var(--color-text);
-    box-shadow: 0 0 0 1px var(--color-text);
+    background: var(--color-selected-bg);
+    border-color: var(--color-selected);
+    box-shadow: 0 0 0 1px var(--color-selected);
+}
+
+.product-card.is-selected .stepper__input {
+    color: var(--color-selected);
 }
 
 .product-card.is-unavailable {
@@ -725,9 +732,10 @@ textarea.field__input {
 }
 
 .choice:has(input:checked) {
-    background: var(--color-surface);
-    border-color: var(--color-text);
-    box-shadow: 0 0 0 1px var(--color-text);
+    color: var(--color-selected);
+    background: var(--color-selected-bg);
+    border-color: var(--color-selected);
+    box-shadow: 0 0 0 1px var(--color-selected);
 }
 
 .choice:has(input:focus-visible) {
@@ -768,7 +776,7 @@ textarea.field__input {
 }
 
 .choice--card:has(input:checked)::before {
-    border: 6px solid var(--color-text);
+    border: 6px solid var(--color-selected);
 }
 
 /* ---------- order bar ---------- */
