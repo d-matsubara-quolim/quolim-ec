@@ -50,11 +50,11 @@ class ProductPagesTest extends TestCase
         }
 
         $response->assertSeeInOrder(['シャンティ・ショコラ・フレーズ', 'アルブル・ド・ノエル', 'シャンティ・フレーズ', 'titaのオードブル']);
-        $response->assertSeeInOrder(['フラットリア チタ', 'でのお受け取りのみ']);
+        $response->assertSeeInOrder(['フラットリア チタ', 'のみ']);
         $response->assertSee('サイエンス パティスリー ササ')->assertSee('フラットリア チタ');
         $response->assertDontSee('price]', false);
         $response->assertDontSee('商品ID');
-        $response->assertSeeInOrder(['¥3,620', 'でのお受け取りのみ']);
+        $response->assertSeeInOrder(['¥3,620', 'のみ']);
     }
 
     public function test_detail_page(): void

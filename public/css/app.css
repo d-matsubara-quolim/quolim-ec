@@ -17,6 +17,8 @@
     --color-error-bg: #fdf0ef;
     --color-warning-bg: #fbf6ea;
     --color-warning-border: #eadfc2;
+    --color-highlight: #ff9900;
+    --color-highlight-bg: #fff6e0;
     --radius-sm: 8px;
     --radius: 14px;
     --radius-lg: 20px;
@@ -238,8 +240,8 @@ main.container {
 }
 
 .badge--store {
-    color: var(--color-muted);
-    background: var(--color-surface);
+    color: var(--color-highlight);
+    background: var(--color-highlight-bg);
 }
 
 /* ---------- buttons ---------- */

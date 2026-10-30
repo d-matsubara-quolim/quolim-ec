@@ -77,7 +77,7 @@
                             @endif
                             <p class="product-card__price"><x-yen :amount="$product->price" /><span class="tax">税込</span></p>
                             @if ($onlyAt !== [])
-                                <p class="product-card__store"><span class="badge badge--store"><span class="nowrap">{{ collect($onlyAt)->map(fn ($code) => $storeNames[$code])->join('・') }}</span><span class="nowrap">のみ</span></span></p>
+                                <p class="product-card__store"><span class="badge badge--store"><span class="nowrap">{{ collect($onlyAt)->map(fn ($code) => $storeNames[$code])->join('・') }}</span> <span class="nowrap">のみ</span></span></p>
                             @endif
                         </div>
                         <div class="stepper">
