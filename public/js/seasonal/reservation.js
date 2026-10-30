@@ -1,5 +1,5 @@
 /*
- * 季節商品予約フォームの表示補助（個数の増減、合計金額、受取店舗に応じた選択肢の絞り込み）。
+ * 季節商品予約フォームの表示補助（個数の増減、合計金額、受取店舗に応じた選択肢の絞り込み、入力途中の内容の保持）。
  * 金額・選択肢の正しさはサーバー側で検証するため、ここでの計算は表示専用。
  */
 (function () {
@@ -14,6 +14,51 @@
     var data = JSON.parse(dataElement.textContent);
     var totalElement = document.getElementById('total');
     var countElement = document.getElementById('item-count');
+
+    // 商品詳細ページなどへ移動して戻っても入力内容が消えないよう、タブ内（sessionStorage）に保存する。
+    // タブを閉じると消える。予約完了画面でも消す。
+    var draftKey = form.dataset.draftKey;
+    var draftFields = ['store', 'date', 'time_slot', 'name', 'kana', 'tel', 'note'];
+
+    function saveDraft() {
+        var draft = {quantities: {}};
+        form.querySelectorAll('.stepper__input').forEach(function (input) {
+            draft.quantities[input.id] = input.value;
+        });
+        draftFields.forEach(function (name) {
+            var field = form.elements[name];
+            draft[name] = field ? field.value : '';
+        });
+        try {
+            sessionStorage.setItem(draftKey, JSON.stringify(draft));
+        } catch (e) {
+            // 保存できない環境（プライベートモードなど）では保持しない
+        }
+    }
+
+    function restoreDraft() {
+        var draft;
+        try {
+            draft = JSON.parse(sessionStorage.getItem(draftKey));
+        } catch (e) {
+            return;
+        }
+        if (!draft) {
+            return;
+        }
+        Object.keys(draft.quantities || {}).forEach(function (id) {
+            var input = document.getElementById(id);
+            if (input && input.classList.contains('stepper__input')) {
+                input.value = draft.quantities[id];
+            }
+        });
+        draftFields.forEach(function (name) {
+            var field = form.elements[name];
+            if (field && typeof draft[name] === 'string') {
+                field.value = draft[name];
+            }
+        });
+    }
 
     function yen(amount) {
         return '¥' + amount.toLocaleString('ja-JP');
@@ -41,6 +86,7 @@
         });
         totalElement.textContent = yen(total);
         countElement.textContent = count > 0 ? count + '点' : '';
+        saveDraft();
     }
 
     function selectedStore() {
@@ -90,6 +136,12 @@
     form.querySelectorAll('input[name="store"]').forEach(function (input) {
         input.addEventListener('change', updateStore);
     });
+    form.addEventListener('input', saveDraft);
+    form.addEventListener('change', saveDraft);
 
+    // 入力エラー・「修正する」で戻ったときはサーバーから戻した内容を優先する
+    if (!form.hasAttribute('data-has-old-input')) {
+        restoreDraft();
+    }
     updateStore();
 })();

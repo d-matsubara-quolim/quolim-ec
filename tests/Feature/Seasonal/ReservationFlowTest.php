@@ -76,7 +76,8 @@ class ReservationFlowTest extends TestCase
             ->assertSee('ご予約を承りました')
             ->assertSee('261224121000')
             ->assertSee('¥15,370')
-            ->assertDontSee('090-1234-5678');
+            ->assertDontSee('090-1234-5678')
+            ->assertSee('sessionStorage.removeItem("seasonal-draft:xmas-2026")', false);
 
         $slip = $this->posTable('P_SLIP_TRN')->sole();
         $this->assertSame('261224121000', $slip->SLIP_NO);
@@ -234,7 +235,8 @@ class ReservationFlowTest extends TestCase
             ->assertSee('id="quantity-7274" value="2"', false)
             ->assertSee('name="store" value="12" checked', false)
             ->assertSee('name="date" value="2026-12-24" checked', false)
-            ->assertSee('name="time_slot" value="17:00-18:00" checked', false);
+            ->assertSee('name="time_slot" value="17:00-18:00" checked', false)
+            ->assertSee('data-has-old-input', false);
     }
 
     public function test_complete_page_without_reservation_redirects_to_form(): void

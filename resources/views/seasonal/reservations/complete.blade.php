@@ -39,3 +39,9 @@
     </div>
 </div>
 @endsection
+
+@push('scripts')
+    <script>
+        try { sessionStorage.removeItem(@json("seasonal-draft:{$campaign->slug}")); } catch (e) {}
+    </script>
+@endpush

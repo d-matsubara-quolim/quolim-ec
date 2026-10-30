@@ -54,7 +54,8 @@ class ProductPagesTest extends TestCase
         $response->assertSee('サイエンス パティスリー ササ')->assertSee('フラットリア チタ');
         $response->assertDontSee('price]', false);
         $response->assertDontSee('商品ID');
-        $response->assertSeeInOrder(['¥3,620', 'のみ']);
+        $response->assertSeeInOrder(['のみ', 'titaのオードブル', '¥3,620']);
+        $response->assertDontSee('data-has-old-input', false);
     }
 
     public function test_detail_page(): void

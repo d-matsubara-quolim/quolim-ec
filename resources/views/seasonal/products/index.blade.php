@@ -50,7 +50,7 @@
         </div>
     @endif
 
-    <form method="post" action="{{ route('seasonal.reservations.confirm', $campaign->slug) }}" id="reservation-form" novalidate>
+    <form method="post" action="{{ route('seasonal.reservations.confirm', $campaign->slug) }}" id="reservation-form" data-draft-key="seasonal-draft:{{ $campaign->slug }}" @if (session()->hasOldInput()) data-has-old-input @endif novalidate>
         @csrf
 
         <section class="step">
@@ -64,9 +64,14 @@
                             <img src="{{ $product->image }}" alt="{{ $product->name }}" class="product-card__image" loading="lazy">
                         </a>
                         <div class="product-card__body">
-                            @if ($product->note !== '')
+                            @if ($product->note !== '' || $onlyAt !== [])
                                 <div class="product-card__badges">
-                                    <span class="badge">{{ $product->note }}</span>
+                                    @if ($product->note !== '')
+                                        <span class="badge">{{ $product->note }}</span>
+                                    @endif
+                                    @if ($onlyAt !== [])
+                                        <span class="badge badge--store"><span class="nowrap">{{ collect($onlyAt)->map(fn ($code) => $storeNames[$code])->join('・') }}</span> <span class="nowrap">のみ</span></span>
+                                    @endif
                                 </div>
                             @endif
                             <p class="product-card__name">
@@ -76,9 +81,6 @@
                                 <p class="product-card__name-en">{{ $product->nameEn }}</p>
                             @endif
                             <p class="product-card__price"><x-yen :amount="$product->price" /><span class="tax">税込</span></p>
-                            @if ($onlyAt !== [])
-                                <p class="product-card__store"><span class="badge badge--store"><span class="nowrap">{{ collect($onlyAt)->map(fn ($code) => $storeNames[$code])->join('・') }}</span> <span class="nowrap">のみ</span></span></p>
-                            @endif
                         </div>
                         <div class="stepper">
                             <button type="button" class="stepper__button" data-step="-1" aria-label="{{ $product->name }}を1{{ $product->unit }}減らす">−</button>

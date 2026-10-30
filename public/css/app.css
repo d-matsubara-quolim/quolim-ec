@@ -583,10 +583,6 @@ textarea.field__input {
     font-variant-numeric: tabular-nums;
 }
 
-.product-card__store {
-    margin-top: 8px !important;
-}
-
 .stepper {
     display: flex;
     gap: 4px;
