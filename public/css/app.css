@@ -37,8 +37,12 @@
 html {
     scroll-behavior: smooth;
     /* 固定ヘッダー・下部の合計バーに隠れないようにする */
-    scroll-padding-top: 72px;
+    scroll-padding-top: 16px;
     scroll-padding-bottom: 100px;
+}
+
+html.has-header {
+    scroll-padding-top: 72px;
 }
 
 /* スマホでボタンを連続タップしたときの拡大を防ぐ（ピンチでの拡大はできる） */
@@ -51,7 +55,12 @@ textarea {
     touch-action: manipulation;
 }
 
+/* 内容が少ないページでもフッターを画面の下端に置く */
 body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    min-height: 100dvh;
     margin: 0;
     color: var(--color-text);
     background: var(--color-bg);
@@ -89,6 +98,7 @@ p {
 }
 
 main.container {
+    flex: 1 0 auto;
     padding-top: 24px;
     padding-bottom: 64px;
 }

@@ -17,6 +17,9 @@ return [
 
     'privacy_policy_url' => 'https://quolim.co.jp/privacy-policy.html',
 
+    // サイト上部のヘッダー（サイト名・メニュー）を表示するか
+    'show_header' => false,
+
     /*
     |--------------------------------------------------------------------------
     | Trusted Proxies

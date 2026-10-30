@@ -1,6 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
+    <h1 class="page-title">{{ config('app.name') }}</h1>
+
     @forelse ($campaigns as $campaign)
         @if ($loop->first)
             <div class="campaign-grid">

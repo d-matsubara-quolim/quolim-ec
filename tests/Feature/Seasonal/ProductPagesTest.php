@@ -17,8 +17,22 @@ class ProductPagesTest extends TestCase
     {
         $this->get('/')
             ->assertOk()
-            ->assertSee('クリスマスケーキ・オードブル')
+            ->assertSee(config('seasonal.xmas-2026.title'))
             ->assertSee(route('seasonal.products.index', 'xmas-2026'), false);
+    }
+
+    public function test_home_has_site_name_as_heading(): void
+    {
+        $this->get('/')->assertOk()->assertSee('<h1 class="page-title">'.e(config('app.name')).'</h1>', false);
+    }
+
+    public function test_header_can_be_switched_by_config(): void
+    {
+        config(['app.show_header' => false]);
+        $this->get('/')->assertOk()->assertDontSee('site-header', false);
+
+        config(['app.show_header' => true]);
+        $this->get('/')->assertOk()->assertSee('site-header', false)->assertSee('class="has-header"', false);
     }
 
     public function test_home_hides_closed_campaigns(): void

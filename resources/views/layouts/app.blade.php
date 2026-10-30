@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="ja" @class(['has-header' => config('app.show_header')])>
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -11,7 +11,9 @@
     @stack('head')
 </head>
 <body>
-    <x-site-header />
+    @if (config('app.show_header'))
+        <x-site-header />
+    @endif
 
     <main class="container">
         @yield('content')
