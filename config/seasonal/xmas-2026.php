@@ -65,7 +65,7 @@ return [
             'unit' => '台',
             'note' => '限定 50',
             'image' => 'https://cdn.quolim.co.jp/img/sps/menu/xmas-cake_002.png',
-            'description' => '',
+            'description' => 'しっかりとしたチョコレートの風味豊かな滑らかな生クリームとしっとりとしたチョコレートのスポンジ生地で甘酸っぱい苺をサンドしました。クリスマスしか味わえないチョコレートと苺の素敵なハーモニー。',
             'pos_product_ids' => ['07' => 7274, '12' => 7298],
         ],
         [
@@ -76,7 +76,7 @@ return [
             'unit' => '台',
             'note' => '限定 20',
             'image' => 'https://cdn.quolim.co.jp/img/sps/menu/xmas-cake_001.png',
-            'description' => '',
+            'description' => 'フランス語で「クリスマスツリー」という名前のケーキ。濃厚なピスタチオムースの中には甘酸っぱい2層のフランボワーズ。食感も味も異なる5つの層を一緒に食べることで完成する絶妙なハーモニーをお楽しみください。',
             'pos_product_ids' => ['07' => 5298, '12' => 3899],
         ],
         [
@@ -87,7 +87,7 @@ return [
             'unit' => '台',
             'note' => '限定 50',
             'image' => 'https://cdn.quolim.co.jp/img/sps/menu/xmas-cake_003.png',
-            'description' => '',
+            'description' => 'しっとりとした、口どけの良いスポンジと甘さ控えめの生クリーム、甘酸っぱいイチゴが相性抜群の、大人もこどもも大好きなケーキです。',
             'pos_product_ids' => ['07' => 5300, '12' => 3901],
         ],
         [
@@ -98,7 +98,15 @@ return [
             'unit' => 'セット',
             'note' => '',
             'image' => 'https://cdn.quolim.co.jp/img/tita/menu/set_004.png',
-            'description' => '',
+            'description' => 'フラットリアチタの人気メニューを詰め込んだオードブルです。ちょっとおしゃれなクリスマスパーティーにぜひ。
+
+・シャルキュトリー  (生ハムなどの盛合せ)
+・オニオンリング
+・フライドポテト
+・ガーリックシュリンプ
+・チートマチキン
+・クリスマスキッシュ
+・ペンネジェノベーゼ',
             'pos_product_ids' => ['12' => 8866],
         ],
         [
@@ -109,7 +117,7 @@ return [
             'unit' => 'セット',
             'note' => '',
             'image' => 'https://cdn.quolim.co.jp/img/tita/menu/set_007.png',
-            'description' => '',
+            'description' => 'オリジナルスパイスのフライドチキン。クリスマスはやっぱりチキンでしょ？',
             'pos_product_ids' => ['12' => 3833],
         ],
         [
@@ -120,7 +128,9 @@ return [
             'unit' => 'セット',
             'note' => '',
             'image' => 'https://cdn.quolim.co.jp/img/tita/menu/set_008.png',
-            'description' => '',
+            'description' => 'トマトとブロッコリーでクリスマスカラーのキッシュに仕上げました。お家であたためてお召し上がりください。
+
+※ キッシュのみのお渡しです',
             'pos_product_ids' => ['12' => 8767],
         ],
         [
@@ -131,7 +141,9 @@ return [
             'unit' => 'セット',
             'note' => '',
             'image' => 'https://cdn.quolim.co.jp/img/tita/menu/set_009.png',
-            'description' => '',
+            'description' => 'トマトとブロッコリーでクリスマスカラーのキッシュに仕上げました。お家であたためてお召し上がりください。
+
+※ キッシュのみのお渡しです',
             'pos_product_ids' => ['12' => 8768],
         ],
     ],
