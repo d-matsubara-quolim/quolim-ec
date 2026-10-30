@@ -111,7 +111,7 @@ return [
         [
             'id' => 8767,
             'name' => '気まぐれキッシュ（ホール）',
-            'name_en' => 'Quiche',
+            'name_en' => 'Quiche (whole)',
             'price' => 2290,
             'unit' => 'セット',
             'note' => '',
@@ -122,7 +122,7 @@ return [
         [
             'id' => 8768,
             'name' => '気まぐれキッシュ（1/4カット）',
-            'name_en' => 'Quiche',
+            'name_en' => 'Quiche (1/4 slice)',
             'price' => 650,
             'unit' => 'セット',
             'note' => '',
