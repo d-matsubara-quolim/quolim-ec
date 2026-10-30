@@ -64,22 +64,21 @@
                             <img src="{{ $product->image }}" alt="{{ $product->name }}" class="product-card__image" loading="lazy">
                         </a>
                         <div class="product-card__body">
-                            <div class="product-card__badges">
-                                @if ($product->note !== '')
+                            @if ($product->note !== '')
+                                <div class="product-card__badges">
                                     <span class="badge">{{ $product->note }}</span>
-                                @endif
-                                @if ($onlyAt !== [])
-                                    <span class="badge badge--store">{{ collect($onlyAt)->map(fn ($code) => $storeNames[$code])->join('・') }}でのお受け取りのみ</span>
-                                @endif
-                            </div>
+                                </div>
+                            @endif
                             <p class="product-card__name">
                                 <a href="{{ route('seasonal.products.show', [$campaign->slug, $product->id]) }}">{{ $product->name }}</a>
                             </p>
                             @if ($product->nameEn !== '')
                                 <p class="product-card__name-en">{{ $product->nameEn }}</p>
                             @endif
-                            <p class="product-card__meta">商品ID：{{ $product->id }}</p>
                             <p class="product-card__price"><x-yen :amount="$product->price" /><span class="tax">税込</span></p>
+                            @if ($onlyAt !== [])
+                                <p class="product-card__store"><span class="badge badge--store"><span class="nowrap">{{ collect($onlyAt)->map(fn ($code) => $storeNames[$code])->join('・') }}</span><span class="nowrap">でのお受け取りのみ</span></span></p>
+                            @endif
                         </div>
                         <div class="stepper">
                             <button type="button" class="stepper__button" data-step="-1" aria-label="{{ $product->name }}を1{{ $product->unit }}減らす">−</button>

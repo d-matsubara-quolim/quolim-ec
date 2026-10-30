@@ -98,6 +98,11 @@ main.container {
     white-space: nowrap;
 }
 
+/* 折り返すときはこの単位で改行する */
+.nowrap {
+    display: inline-block;
+}
+
 /* ---------- header / footer ---------- */
 
 .site-header {
@@ -562,16 +567,15 @@ textarea.field__input {
     letter-spacing: .04em;
 }
 
-.product-card__meta {
-    color: var(--color-subtle);
-    font-size: 11px;
-}
-
 .product-card__price {
     margin-top: 6px !important;
     font-size: 16px;
     font-weight: 700;
     font-variant-numeric: tabular-nums;
+}
+
+.product-card__store {
+    margin-top: 8px !important;
 }
 
 .stepper {
@@ -608,7 +612,8 @@ textarea.field__input {
 }
 
 .stepper__input {
-    width: 2.5em;
+    flex: 1;
+    width: 0;
     min-width: 0;
     padding: 0;
     color: var(--color-text);
@@ -629,7 +634,8 @@ textarea.field__input {
 }
 
 .stepper__unit {
-    flex: 1;
+    flex: none;
+    margin-right: 10px;
     color: var(--color-muted);
     font-size: 12px;
 }

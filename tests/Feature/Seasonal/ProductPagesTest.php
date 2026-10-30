@@ -28,7 +28,7 @@ class ProductPagesTest extends TestCase
         $this->get('/')->assertOk()->assertSee('現在受付中のWeb予約はありません。');
     }
 
-    public function test_list_shows_all_products_with_id_price_and_quantity_limit(): void
+    public function test_list_shows_all_products_with_price_and_quantity_limit(): void
     {
         $response = $this->get('/seasonal/xmas-2026')->assertOk();
 
@@ -41,7 +41,7 @@ class ProductPagesTest extends TestCase
             [8767, '気まぐれキッシュ（ホール）', '¥2,290', null],
             [8768, '気まぐれキッシュ（1/4カット）', '¥650', null],
         ] as [$id, $name, $price, $note]) {
-            $response->assertSee($name)->assertSee("商品ID：{$id}")->assertSee($price)
+            $response->assertSee($name)->assertSee($price)
                 ->assertSee("name=\"quantities[{$id}]\"", false)
                 ->assertSee('min="0" max="10"', false);
             if ($note !== null) {
@@ -50,9 +50,11 @@ class ProductPagesTest extends TestCase
         }
 
         $response->assertSeeInOrder(['シャンティ・ショコラ・フレーズ', 'アルブル・ド・ノエル', 'シャンティ・フレーズ', 'titaのオードブル']);
-        $response->assertSee('フラットリア チタでのお受け取りのみ');
+        $response->assertSeeInOrder(['フラットリア チタ', 'でのお受け取りのみ']);
         $response->assertSee('サイエンス パティスリー ササ')->assertSee('フラットリア チタ');
         $response->assertDontSee('price]', false);
+        $response->assertDontSee('商品ID');
+        $response->assertSeeInOrder(['¥3,620', 'でのお受け取りのみ']);
     }
 
     public function test_detail_page(): void
@@ -60,7 +62,7 @@ class ProductPagesTest extends TestCase
         $this->get('/seasonal/xmas-2026/products/8866')
             ->assertOk()
             ->assertSee('titaのオードブル')
-            ->assertSeeInOrder(['商品ID', '8866'])
+            ->assertDontSee('商品ID')
             ->assertSee('¥3,620')
             ->assertSee('https://cdn.quolim.co.jp/img/tita/menu/set_004.png')
             ->assertSeeInOrder(['受取店舗', 'フラットリア チタ'])

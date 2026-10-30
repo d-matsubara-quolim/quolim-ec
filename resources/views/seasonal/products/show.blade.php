@@ -29,7 +29,6 @@
 
             <dl class="summary-list summary-list--compact">
                 <dt>受取店舗</dt><dd>{{ $storeNames->join('、') }}</dd>
-                <dt>商品ID</dt><dd>{{ $product->id }}</dd>
             </dl>
 
             <a href="{{ route('seasonal.products.index', $campaign->slug) }}" class="button button--primary button--block">予約フォームへ</a>
