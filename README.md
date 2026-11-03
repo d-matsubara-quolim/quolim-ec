@@ -105,9 +105,14 @@ docker-compose -f docker-compose.prod.yml exec -u www-data app php artisan view:
   - `POS_DB_*` を本番 DB に向けた（接続ユーザーは対象テーブルへの SELECT / INSERT / UPDATE のみ）
   - `TRUSTED_PROXIES=*`（ALB で HTTPS を終端するため。EC2 には ALB からしか到達できないこと）
   - `SESSION_SECURE_COOKIE=true`
+  - `SESSION_COOKIE=quolim_ec_session`（未設定だと `web-session` になることがある。CloudFront の許可リストと揃える）
   - `LOG_LEVEL=info`
   - `LOG_STACK=daily,lineworks` と `LINEWORKS_*`（`php artisan lineworks:test-notification` で届くことを確認）
 - [ ] HTTPS で配信されている（ALB のヘルスチェックは `/up`）
+- [ ] CloudFront を使う場合（419 Page Expired の主因になりやすい）
+  - デフォルトビヘイビアの **キャッシュポリシー** が HTML をキャッシュしないこと（`CachingDisabled`、または Origin の `Cache-Control: private, no-store` を尊重するポリシー）
+  - **オリジンリクエストポリシー** で Cookie をオリジンへ転送すること（すべて転送、または `quolim_ec_session` / `XSRF-TOKEN` を許可）
+  - フォームページのレスポンスに `set-cookie`（セッション）と `cache-control: … no-store` が付いていること（開発者ツールの Network で確認）
 - [ ] 受付期間（`opens_at` / `closes_at`）が正しい
 - [ ] 各店舗で 1 件テスト予約し、POS の予約台帳に表示されることを確認した（確認後に削除）
 - [ ] `storage/logs` に個人情報が出ていないことを確認した

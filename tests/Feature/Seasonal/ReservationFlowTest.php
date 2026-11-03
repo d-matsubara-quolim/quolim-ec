@@ -249,6 +249,14 @@ class ReservationFlowTest extends TestCase
         // CSRF 検証はユニットテスト実行中だけ無効になるため、環境名を変えて有効にする
         $this->app['env'] = 'production';
 
+        \Illuminate\Support\Facades\Log::spy();
+
         $this->post('/seasonal/xmas-2026/confirm', $this->input())->assertStatus(419);
+
+        \Illuminate\Support\Facades\Log::shouldHaveReceived('warning')
+            ->withArgs(fn (string $message, array $context) => $message === 'CSRF token mismatch'
+                && $context['path'] === 'seasonal/xmas-2026/confirm'
+                && array_key_exists('has_session_cookie', $context)
+                && array_key_exists('sec_fetch_site', $context));
     }
 }

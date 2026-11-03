@@ -21,6 +21,16 @@ class ProductPagesTest extends TestCase
             ->assertSee(route('seasonal.products.index', 'xmas-2026'), false);
     }
 
+    public function test_html_responses_are_not_cacheable(): void
+    {
+        $response = $this->get('/')->assertOk()->assertHeader('Pragma', 'no-cache');
+
+        $cacheControl = strtolower((string) $response->headers->get('Cache-Control'));
+        foreach (['private', 'no-store', 'no-cache', 'must-revalidate'] as $directive) {
+            $this->assertStringContainsString($directive, $cacheControl);
+        }
+    }
+
     public function test_home_has_site_name_as_heading(): void
     {
         $this->get('/')->assertOk()->assertSee('<h1 class="page-title">'.e(config('app.name')).'</h1>', false);
