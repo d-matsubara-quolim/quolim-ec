@@ -56,7 +56,15 @@ ERROR 以上のログ（POS 登録の失敗、想定外の例外）を LINE WORK
 - キャンペーンの説明文（`description`）と注意書き（`notice`）もこのファイル。並び・装飾（HTML）を変えるときは `resources/views/seasonal/campaigns/{slug}/description.blade.php`
 - 店舗ごとの POS 側設定（部屋 ID・グループ商品）は `config/pos.php`
 
-本番で設定を変えたら `php artisan config:cache` を実行し直す。
+### キャンペーンを無効化する
+
+- **受付期間外にする**（`opens_at` / `closes_at`、または `.env` の `SEASONAL_*_OPENS_AT` / `CLOSES_AT`）  
+  ホームには出ない。URL 直打ちでは「受付期間外」ページになる。
+- **定義ファイルを `config/seasonal/` 直下から外す**（ホームにも出さず、URL も 404 にしたいとき）  
+  例: `config/seasonal/xmas-2026.php` を `config/seasonal/_off/xmas-2026.php` へ移す、または `xmas-2026.php.bak` にリネームする。  
+  `config/seasonal/` 直下の `*.php` だけがキャンペーンとして読み込まれる。
+
+本番で設定を変えたら `php artisan config:cache` を実行し直す（ソース変更ごとなら `./deploy.sh` で可）。
 
 ## 本番デプロイ
 
