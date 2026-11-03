@@ -57,9 +57,9 @@ class ProductPagesTest extends TestCase
         $response = $this->get('/seasonal/xmas-2026')->assertOk();
 
         foreach ([
-            [7274, 'シャンティ・ショコラ・フレーズ', '¥4,900', '限定 50'],
-            [5298, 'アルブル・ド・ノエル', '¥4,000', '限定 20'],
-            [5300, 'シャンティ・フレーズ', '¥4,400', '限定 50'],
+            [7274, 'シャンティ・ショコラ・フレーズ', '¥4,900', null],
+            [5298, 'アルブル・ド・ノエル', '¥4,000', '限定 30'],
+            [5300, 'シャンティ・フレーズ', '¥4,400', null],
             [8866, 'titaのオードブル', '¥3,620', null],
             [3833, 'フライドチキン（４個）', '¥650', null],
             [8767, '気まぐれキッシュ（ホール）', '¥2,290', null],
@@ -80,6 +80,9 @@ class ProductPagesTest extends TestCase
         $response->assertDontSee('商品ID');
         $response->assertSeeInOrder(['のみ', 'titaのオードブル', '¥3,620']);
         $response->assertDontSee('data-has-old-input', false);
+        $response->assertSee('トップへ戻る')
+            ->assertSee('class="back-home"', false)
+            ->assertSee('href="'.route('home').'"', false);
     }
 
     public function test_detail_page(): void
