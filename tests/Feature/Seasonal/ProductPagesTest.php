@@ -82,6 +82,15 @@ class ProductPagesTest extends TestCase
             ->assertSee('https://cdn.quolim.co.jp/img/tita/menu/set_004.png')
             ->assertSeeInOrder(['受取店舗', 'フラットリア チタ'])
             ->assertDontSee('サイエンス パティスリー ササ')
+            ->assertSee('product-detail__description', false);
+    }
+
+    public function test_detail_page_hides_empty_description(): void
+    {
+        config(['seasonal.xmas-2026.products.3.description' => '']);
+
+        $this->get('/seasonal/xmas-2026/products/8866')
+            ->assertOk()
             ->assertDontSee('product-detail__description', false);
     }
 

@@ -100,7 +100,7 @@ docker-compose -f docker-compose.prod.yml exec -u www-data app php artisan view:
 ### チェックリスト
 
 - [ ] `.env` を本番用に作成した（リポジトリには含めない）
-  - `APP_ENV=production` / `APP_DEBUG=false` / `APP_URL=https://...`
+  - `APP_ENV=production` / `APP_DEBUG=false` / `APP_URL=https://（公開ドメイン）`（本番の css・js・リンク・フォーム送信先の URL はすべて APP_URL で作る。CloudFront・ALB の名前にしない）
   - `APP_KEY` を生成した
   - `POS_DB_*` を本番 DB に向けた（接続ユーザーは対象テーブルへの SELECT / INSERT / UPDATE のみ）
   - `TRUSTED_PROXIES=*`（ALB で HTTPS を終端するため。EC2 には ALB からしか到達できないこと）
