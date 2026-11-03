@@ -22,21 +22,6 @@
 @endphp
 
 @section('content')
-    {{-- ヘッダー非表示時でもトップへ戻れるようにする --}}
-    <nav class="back-home" aria-label="サイトナビゲーション">
-        <a href="{{ route('home') }}" class="back-home__link">
-            <span class="back-home__arrow" aria-hidden="true">
-                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M15 6 9 12l6 6"/>
-                </svg>
-            </span>
-            <span class="back-home__text">
-                <span class="back-home__eyebrow">Home</span>
-                <span class="back-home__label">トップへ戻る</span>
-            </span>
-        </a>
-    </nav>
-
     <section class="hero">
         @if ($campaign->coverImage !== '')
             <img src="{{ $campaign->coverImage }}" alt="" class="hero__image">

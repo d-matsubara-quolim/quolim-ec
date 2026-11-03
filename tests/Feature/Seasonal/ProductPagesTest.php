@@ -85,9 +85,7 @@ class ProductPagesTest extends TestCase
         $response->assertDontSee('商品ID');
         $response->assertSeeInOrder(['のみ', 'titaのオードブル', '¥3,620']);
         $response->assertDontSee('data-has-old-input', false);
-        $response->assertSee('トップへ戻る')
-            ->assertSee('class="back-home"', false)
-            ->assertSee('href="'.route('home').'"', false);
+        $response->assertDontSee('back-home', false);
     }
 
     public function test_detail_page(): void
