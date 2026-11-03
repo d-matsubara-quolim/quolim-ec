@@ -92,7 +92,6 @@
                     </li>
                 @endforeach
             </ul>
-            <p class="step__hint">各商品 {{ $campaign->maxQuantityPerProduct }} 個までご予約いただけます。</p>
             @error('quantities')<p class="field-error">{{ $message }}</p>@enderror
             @error('quantities.*')<p class="field-error">{{ $message }}</p>@enderror
         </section>
