@@ -21,6 +21,9 @@
 
     <x-site-footer />
 
+    @if (config('app.show_header'))
+        <script src="{{ asset('js/site-header.js') }}?v={{ filemtime(public_path('js/site-header.js')) }}" defer></script>
+    @endif
     @stack('scripts')
 </body>
 </html>

@@ -42,7 +42,12 @@ class ProductPagesTest extends TestCase
         $this->get('/')->assertOk()->assertDontSee('site-header', false);
 
         config(['app.show_header' => true]);
-        $this->get('/')->assertOk()->assertSee('site-header', false)->assertSee('class="has-header"', false);
+        $this->get('/')
+            ->assertOk()
+            ->assertSee('site-header', false)
+            ->assertSee('data-site-header', false)
+            ->assertSee('js/site-header.js', false)
+            ->assertSee('class="has-header"', false);
     }
 
     public function test_home_hides_closed_campaigns(): void

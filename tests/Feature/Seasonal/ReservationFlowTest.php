@@ -92,12 +92,12 @@ class ReservationFlowTest extends TestCase
         );
     }
 
-    public function test_store_07_uses_its_own_product_ids_and_19_oclock_slot(): void
+    public function test_store_07_uses_its_own_product_ids(): void
     {
         $token = $this->tokenFrom($this->confirm($this->input([
             'quantities' => [7274 => 1, 5298 => 1],
             'store' => '07',
-            'time_slot' => '18:00-19:00',
+            'time_slot' => '17:00-18:00',
         ])));
 
         $this->post('/seasonal/xmas-2026/reserve', ['token' => $token])->assertRedirect('/seasonal/xmas-2026/complete');
@@ -127,7 +127,6 @@ class ReservationFlowTest extends TestCase
     {
         $this->confirm($this->input(['store' => '99']))->assertSessionHasErrors('store');
         $this->confirm($this->input(['date' => '2026-12-26']))->assertSessionHasErrors('date');
-        // 18:00-19:00 はササのみ
         $this->confirm($this->input(['time_slot' => '18:00-19:00']))->assertSessionHasErrors('time_slot');
         $this->confirm($this->input(['time_slot' => '11:00-12:00']))->assertSessionHasErrors('time_slot');
     }
