@@ -77,12 +77,12 @@
         var count = 0;
         form.querySelectorAll('[data-product]').forEach(function (card) {
             var input = card.querySelector('.stepper__input');
-            var quantity = input.disabled ? 0 : quantityOf(input);
+            var quantity = quantityOf(input);
             total += data.products[card.dataset.product].price * quantity;
             count += quantity;
             card.classList.toggle('is-selected', quantity > 0);
-            card.querySelector('[data-step="-1"]').disabled = input.disabled || quantity <= 0;
-            card.querySelector('[data-step="1"]').disabled = input.disabled || quantity >= parseInt(input.max, 10);
+            card.querySelector('[data-step="-1"]').disabled = quantity <= 0;
+            card.querySelector('[data-step="1"]').disabled = quantity >= parseInt(input.max, 10);
         });
         totalElement.textContent = yen(total);
         countElement.textContent = count > 0 ? count + '点' : '';
@@ -111,10 +111,11 @@
         filterChoices('date', store ? store.dates : null);
         filterChoices('time_slot', store ? store.timeSlots : null);
 
+        // 受取店舗と合わない商品は見た目だけ薄くする。
+        // input を disabled にすると個数が POST されず、サーバー側の店舗不一致チェックをすり抜ける。
         form.querySelectorAll('[data-product]').forEach(function (card) {
             var available = !code || data.products[card.dataset.product].stores.indexOf(code) !== -1;
             card.classList.toggle('is-unavailable', !available);
-            card.querySelector('.stepper__input').disabled = !available;
         });
         updateTotals();
     }

@@ -119,7 +119,13 @@ class ReservationFlowTest extends TestCase
 
     public function test_sasa_cannot_hand_over_tita_products(): void
     {
-        $this->confirm($this->input(['store' => '07', 'quantities' => [7274 => 1, 8866 => 1]]))
+        // チタのみの商品を選んだままササを選ぶと、確認画面へ進まず入力画面へ戻す
+        $this->from('/seasonal/xmas-2026')
+            ->post('/seasonal/xmas-2026/confirm', $this->input([
+                'store' => '07',
+                'quantities' => [7274 => 1, 8866 => 1],
+            ]))
+            ->assertRedirect('/seasonal/xmas-2026')
             ->assertSessionHasErrors(['store' => '「titaのオードブル」は「サイエンス パティスリー ササ」ではお受け取りできません。']);
     }
 
