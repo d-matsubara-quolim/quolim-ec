@@ -54,6 +54,7 @@ ERROR 以上のログ（POS 登録の失敗、想定外の例外）を LINE WORK
 
 - 商品・価格・受取店舗・日時枠・受付期間はこのファイルで管理する（登録される金額はここの価格）
 - キャンペーンの説明文（`description`）と注意書き（`notice`）もこのファイル。並び・装飾（HTML）を変えるときは `resources/views/seasonal/campaigns/{slug}/description.blade.php`
+- フォーム各ステップ用の注意書きは `products_notice` / `stores_notice` / `datetime_notice`（見出しの下・選択肢の前。空なら非表示）
 - 店舗ごとの POS 側設定（部屋 ID・グループ商品）は `config/pos.php`
 
 ### キャンペーンを無効化する

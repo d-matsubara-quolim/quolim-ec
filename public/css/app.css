@@ -442,12 +442,23 @@ main.container {
     letter-spacing: .04em;
 }
 
+.step__title:has(+ .step__notice) {
+    margin-bottom: 8px;
+}
+
 .step__no {
     color: var(--color-accent);
     font-size: 13px;
     font-weight: 700;
     letter-spacing: .1em;
     font-variant-numeric: tabular-nums;
+}
+
+.step__notice {
+    margin: 0 0 20px;
+    color: var(--color-muted);
+    font-size: 13px;
+    line-height: 1.7;
 }
 
 .step__hint {

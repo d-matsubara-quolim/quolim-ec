@@ -55,6 +55,9 @@
 
         <section class="step">
             <h2 class="step__title"><span class="step__no">01</span>商品を選ぶ</h2>
+            @if ($campaign->productsNotice !== '')
+                <p class="step__notice">{!! nl2br(e($campaign->productsNotice)) !!}</p>
+            @endif
 
             <ul class="product-grid">
                 @foreach ($campaign->products as $product)
@@ -98,6 +101,9 @@
 
         <section class="step">
             <h2 class="step__title"><span class="step__no">02</span>受取店舗を選ぶ</h2>
+            @if ($campaign->storesNotice !== '')
+                <p class="step__notice">{!! nl2br(e($campaign->storesNotice)) !!}</p>
+            @endif
             <fieldset class="choice-group">
                 <legend class="visually-hidden">受取店舗</legend>
                 <div class="choice-list choice-list--stores">
@@ -118,6 +124,9 @@
 
         <section class="step">
             <h2 class="step__title"><span class="step__no">03</span>受取日時を選ぶ</h2>
+            @if ($campaign->datetimeNotice !== '')
+                <p class="step__notice">{!! nl2br(e($campaign->datetimeNotice)) !!}</p>
+            @endif
             <fieldset class="choice-group">
                 <legend class="field__label">受取日</legend>
                 <div class="choice-list">

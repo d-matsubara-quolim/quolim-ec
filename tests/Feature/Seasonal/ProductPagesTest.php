@@ -135,6 +135,24 @@ class ProductPagesTest extends TestCase
         $this->get('/seasonal/xmas-2026')->assertDontSee('campaign-description__note', false);
     }
 
+    public function test_step_notices_are_shown_from_config(): void
+    {
+        $this->get('/seasonal/xmas-2026')->assertOk()->assertDontSee('step__notice', false);
+
+        config([
+            'seasonal.xmas-2026.products_notice' => "商品の注意\n2行目",
+            'seasonal.xmas-2026.stores_notice' => '店舗の注意',
+            'seasonal.xmas-2026.datetime_notice' => '<b>日時</b>の注意',
+        ]);
+
+        $this->get('/seasonal/xmas-2026')
+            ->assertOk()
+            ->assertSeeInOrder(['商品を選ぶ', '商品の注意<br />'."\n".'2行目', 'product-grid'], false)
+            ->assertSeeInOrder(['受取店舗を選ぶ', '店舗の注意', 'choice-list--stores'], false)
+            ->assertSeeInOrder(['受取日時を選ぶ', '&lt;b&gt;日時&lt;/b&gt;の注意', '受取日'], false)
+            ->assertDontSee('<b>日時</b>', false);
+    }
+
     public function test_form_links_to_privacy_policy(): void
     {
         $this->get('/seasonal/xmas-2026')

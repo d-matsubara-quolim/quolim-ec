@@ -20,7 +20,12 @@ return [
     'description' => '',
 
     // 説明文の下の注意書き（改行可・空なら非表示）
-    'notice' => 'titaのオードブル・フライドチキン・キッシュは「フラットリア チタ」でのお受け取りとなります。',
+    'notice' => '',
+
+    // 各ステップ見出しの下・選択肢の前に出す注意書き（改行可・空なら非表示）
+    'products_notice' => '',
+    'stores_notice' => 'titaのオードブル・フライドチキン・キッシュは「フラットリア チタ」でのお受け取りとなります。',
+    'datetime_notice' => '',
 
     'cover_image' => 'https://cdn.quolim.co.jp/img/sps/top/xmas-cake.png',
 
