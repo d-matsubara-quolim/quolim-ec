@@ -137,7 +137,9 @@ class ProductPagesTest extends TestCase
 
     public function test_step_notices_are_shown_from_config(): void
     {
-        $this->get('/seasonal/xmas-2026')->assertOk()->assertDontSee('step__notice', false);
+        $this->get('/seasonal/xmas-2026')
+            ->assertOk()
+            ->assertSeeInOrder(['受取店舗を選ぶ', '「フラットリア チタ」でのお受け取りとなります。', 'choice-list--stores'], false);
 
         config([
             'seasonal.xmas-2026.products_notice' => "商品の注意\n2行目",

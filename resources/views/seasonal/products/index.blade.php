@@ -11,10 +11,12 @@
     $allTimeSlots = collect($campaign->stores)->flatMap(fn ($store) => $store->timeSlots)->unique()->sort()->values();
     $clientData = [
         'stores' => collect($campaign->stores)->mapWithKeys(fn ($store) => [$store->code => [
+            'name' => $store->name,
             'dates' => $store->dates,
             'timeSlots' => $store->timeSlots,
         ]]),
         'products' => collect($campaign->products)->mapWithKeys(fn ($product) => [$product->id => [
+            'name' => $product->name,
             'price' => $product->price,
             'stores' => $product->storeCodes(),
         ]]),
@@ -97,6 +99,7 @@
             </ul>
             @error('quantities')<p class="field-error">{{ $message }}</p>@enderror
             @error('quantities.*')<p class="field-error">{{ $message }}</p>@enderror
+            <p class="field-error" id="product-availability-error" hidden></p>
         </section>
 
         <section class="step">
@@ -119,7 +122,11 @@
                     @endforeach
                 </div>
             </fieldset>
-            @error('store')<p class="field-error">{{ $message }}</p>@enderror
+            @error('store')
+                <p class="field-error" id="store-availability-error">{{ $message }}</p>
+            @else
+                <p class="field-error" id="store-availability-error" hidden></p>
+            @enderror
         </section>
 
         <section class="step">
