@@ -361,7 +361,7 @@ main.container {
     display: block;
     width: 100%;
     aspect-ratio: 16 / 9;
-    object-fit: cover;
+    object-fit: contain;
 }
 
 .campaign-card__body {
@@ -567,7 +567,7 @@ textarea.field__input {
     display: block;
     width: 100%;
     aspect-ratio: 1 / 1;
-    object-fit: cover;
+    object-fit: contain;
 }
 
 .product-card__body {
@@ -887,7 +887,7 @@ textarea.field__input {
     display: block;
     width: 100%;
     aspect-ratio: 1 / 1;
-    object-fit: cover;
+    object-fit: contain;
 }
 
 .product-detail__body .badge {
@@ -971,7 +971,7 @@ textarea.field__input {
     display: block;
     width: 56px;
     height: 56px;
-    object-fit: cover;
+    object-fit: contain;
     background: var(--color-surface);
     border-radius: var(--radius-sm);
 }
