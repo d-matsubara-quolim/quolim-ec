@@ -99,7 +99,7 @@ return [
             'id' => 8866,
             'name' => 'titaのオードブル',
             'name_en' => "Hors d'oeuvre de tita",
-            'price' => 3620,
+            'price' => 4290,
             'unit' => 'セット',
             'note' => '',
             'image' => 'https://cdn.quolim.co.jp/img/tita/menu/set_004.png',
