@@ -131,6 +131,7 @@ final class PosReservationRegistrar
             'RESERVATION_END_LIMIT' => $reservation->endTime,
             'RESERVED_DATE' => $reservation->slipDate->toDateString().' '.$reservation->startTime,
             'CUSTOMER_NAME' => $reservation->customerName,
+            'CUSTOMER_INFORMATION_NAME' => $reservation->customerName,
             'CUSTOMER_NAME_KANA' => $this->nullIfEmpty($reservation->customerNameKana),
             'TEL' => $this->nullIfEmpty($reservation->tel),
             'NOTES' => self::NOTES_PREFIX.$reservation->customerRequest,

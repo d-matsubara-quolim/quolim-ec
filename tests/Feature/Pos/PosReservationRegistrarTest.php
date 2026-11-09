@@ -56,6 +56,7 @@ class PosReservationRegistrarTest extends TestCase
         $this->assertSame('18:00:00', $slip->RESERVATION_END_LIMIT);
         $this->assertSame('2026-12-24 17:00:00', $slip->RESERVED_DATE);
         $this->assertSame('笹 泉子', $slip->CUSTOMER_NAME);
+        $this->assertSame('笹 泉子', $slip->CUSTOMER_INFORMATION_NAME);
         $this->assertSame('ささ いずみこ', $slip->CUSTOMER_NAME_KANA);
         $this->assertSame('090-1234-5678', $slip->TEL);
         $this->assertSame('【お客様からのご要望】ろうそく多めで', $slip->NOTES);
