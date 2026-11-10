@@ -21,6 +21,7 @@ final readonly class PosReservation
         public string $customerNameKana,
         public string $tel,
         public string $customerRequest,
+        public int $reservationStatus,
         public array $items,
     ) {}
 }

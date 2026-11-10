@@ -36,6 +36,7 @@ $result = $app->make(PosReservationRegistrar::class)->register(new PosReservatio
     customerNameKana: 'どうじ よやく',
     tel: '090-0000-0000',
     customerRequest: '',
+    reservationStatus: 3,
     items: [
         new PosOrderItem(productId: 7298, amount: 2, price: 4900),
         new PosOrderItem(productId: 8866, amount: 1, price: 3620),

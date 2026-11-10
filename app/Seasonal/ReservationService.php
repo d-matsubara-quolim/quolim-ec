@@ -148,6 +148,7 @@ final class ReservationService
             customerNameKana: $data->kana,
             tel: $data->tel,
             customerRequest: $data->note,
+            reservationStatus: $campaign->reservationStatus,
             items: $items,
         );
     }

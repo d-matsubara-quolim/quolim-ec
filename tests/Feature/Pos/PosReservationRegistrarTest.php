@@ -26,6 +26,7 @@ class PosReservationRegistrarTest extends TestCase
             'customerNameKana' => 'ささ いずみこ',
             'tel' => '090-1234-5678',
             'customerRequest' => 'ろうそく多めで',
+            'reservationStatus' => 3,
             'items' => [
                 new PosOrderItem(productId: 7298, amount: 2, price: 4900),
                 new PosOrderItem(productId: 8866, amount: 1, price: 3620),
@@ -66,7 +67,7 @@ class PosReservationRegistrarTest extends TestCase
         $this->assertSame(0, $slip->ADULT_NUMBER_LIMIT);
         $this->assertSame(0, $slip->CHILD_NUMBER_LIMIT);
         $this->assertSame(1, $slip->STATUS);
-        $this->assertSame(1, $slip->RESERVATION_STATUS);
+        $this->assertSame(3, $slip->RESERVATION_STATUS);
         $this->assertSame(2, $slip->DAYPART_KBN);
         $this->assertSame(0, $slip->IS_DELETED);
         $this->assertNull($slip->DISCOUNT_ID);

@@ -65,7 +65,7 @@ class ProductPagesTest extends TestCase
             [7274, 'シャンティ・ショコラ・フレーズ', '¥4,900', null],
             [5298, 'アルブル・ド・ノエル', '¥4,000', '限定 30'],
             [5300, 'シャンティ・フレーズ', '¥4,400', null],
-            [8866, 'titaのオードブル', '¥3,620', null],
+            [8866, 'titaのオードブル', '¥4,290', null],
             [3833, 'フライドチキン（４個）', '¥650', null],
             [8767, '気まぐれキッシュ（ホール）', '¥2,290', null],
             [8768, '気まぐれキッシュ（1/4カット）', '¥650', null],
@@ -83,7 +83,7 @@ class ProductPagesTest extends TestCase
         $response->assertSee('サイエンス パティスリー ササ')->assertSee('フラットリア チタ');
         $response->assertDontSee('price]', false);
         $response->assertDontSee('商品ID');
-        $response->assertSeeInOrder(['のみ', 'titaのオードブル', '¥3,620']);
+        $response->assertSeeInOrder(['のみ', 'titaのオードブル', '¥4,290']);
         $response->assertDontSee('data-has-old-input', false);
         $response->assertDontSee('back-home', false);
     }
@@ -94,7 +94,7 @@ class ProductPagesTest extends TestCase
             ->assertOk()
             ->assertSee('titaのオードブル')
             ->assertDontSee('商品ID')
-            ->assertSee('¥3,620')
+            ->assertSee('¥4,290')
             ->assertSee('https://cdn.quolim.co.jp/img/tita/menu/set_004.png')
             ->assertSeeInOrder(['受取店舗', 'フラットリア チタ'])
             ->assertDontSee('サイエンス パティスリー ササ')

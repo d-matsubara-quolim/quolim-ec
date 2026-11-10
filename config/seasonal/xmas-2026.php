@@ -33,6 +33,9 @@ return [
 
     'closes_at' => env('SEASONAL_XMAS_2026_CLOSES_AT', '2026-12-21 23:59:59'),
 
+    // POS の P_SLIP_TRN.RESERVATION_STATUS（キャンペーンごとに変える）
+    'reservation_status' => 3,
+
     'max_quantity_per_product' => 10,
 
     // brand_id は POS のブランドID（config/pos.php の brands のキー）

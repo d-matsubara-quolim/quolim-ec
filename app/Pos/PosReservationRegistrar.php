@@ -28,8 +28,6 @@ final class PosReservationRegistrar
 
     private const int SLIP_STATUS_RESERVED = 1;
 
-    private const int RESERVATION_STATUS = 1;
-
     private const int ORDER_STATUS_ORDERED = 1;
 
     private const int ORDER_CATEGORY_COURSE = 2;
@@ -143,7 +141,7 @@ final class PosReservationRegistrar
             'ADULT_NUMBER_LIMIT' => 0,
             'CHILD_NUMBER_LIMIT' => 0,
             'STATUS' => self::SLIP_STATUS_RESERVED,
-            'RESERVATION_STATUS' => self::RESERVATION_STATUS,
+            'RESERVATION_STATUS' => $reservation->reservationStatus,
             'DAYPART_KBN' => $reservation->startTime < self::DAYPART_NIGHT_FROM ? self::DAYPART_NOON : self::DAYPART_NIGHT,
             'SLIP_NO' => $slipNo,
             'DISCOUNT_NAME' => null,
